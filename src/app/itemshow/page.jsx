@@ -17,7 +17,6 @@ export default function ItemListPage() {
         fetch('https://next-backend-sage.vercel.app/showItem').then(res=>res.json()).then(data=>setSampleItems(data));
         
     },[])
-    console.log(sampleItems)
     
 
     const filteredItems = sampleItems.filter((item) => {

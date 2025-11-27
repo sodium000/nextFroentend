@@ -15,7 +15,6 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
-            console.log(currentUser)
             setLoading(false);
             if (!currentUser) {
                 return;
@@ -34,7 +33,6 @@ const AuthProvider = ({ children }) => {
                 Name : refreshedUser?.displayName || '',
                 Email : refreshedUser?.email || ''
             }
-            console.log(User)
 
             try {
                 const idToken = await currentUser.getIdToken();
@@ -48,7 +46,6 @@ const AuthProvider = ({ children }) => {
                 });
 
                 const data = await response.json();
-                console.log(data);
             } catch (error) {
                 console.error("Failed to set auth cookie", error);
             }

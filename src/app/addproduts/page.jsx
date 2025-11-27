@@ -8,7 +8,7 @@ import AuthContext from "@/AuthContext/Authcontext";
 export default function AddProductPage() {
     const router = useRouter();
     const { user, loading } = useContext(AuthContext);
-    const [form, setForm] = useState({
+    const initialForm = {
         title: "",
         shortDesc: "",
         fullDesc: "",
@@ -17,7 +17,8 @@ export default function AddProductPage() {
         priority: "Medium",
         imageUrl: "",
         Categories: "Electronics"
-    });
+    };
+    const [form, setForm] = useState(initialForm);
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export default function AddProductPage() {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         setSuccess(true)
         setTimeout(() => {
             setSuccess(false)
@@ -70,19 +71,25 @@ export default function AddProductPage() {
             Categories,
             image:Image
         };
-        console.log(newItem)
 
         try {
-            fetch('https://next-backend-sage.vercel.app/addItem', {
+            const response = await fetch('https://next-backend-sage.vercel.app/addItem', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${user.accessToken}`
                 },
                 body: JSON.stringify(newItem)
-            }).then(res=>res.json()).then(data=>console.log(data))
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to add product");
+            }
+
+            await response.json();
+            setForm(initialForm);
         } catch (error) {
-            console.log(error)
+
         }
     };
 

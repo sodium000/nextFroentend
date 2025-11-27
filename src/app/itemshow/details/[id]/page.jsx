@@ -21,7 +21,6 @@ export default function ProductDetail({ params }) {
         const sin = fetch(`https://next-backend-sage.vercel.app/item/${id}`).then(res => res.json()).then((data) => { setSingleData(data) })
     }, [loading, user, router, id]);
 
-    console.log(singleData)
 
     if (loading || (!loading && !user)) {
         return (

@@ -27,11 +27,7 @@ export default function RegisterPage() {
     const googleLogin = () => {
         SignByGoogle()
             .then((result) => {
-                console.log(result.user)
-
             }).catch((error) => {
-                console.log(error);
-                // ...
             });
     };
 
@@ -76,10 +72,9 @@ export default function RegisterPage() {
             const PhotoURL = formData.Photo_Url
             RegWithEmail(Name, Email, Password, PhotoURL)
                 .then((userCredential) => {
-                    console.log(userCredential.user)
+
                 })
                 .catch((error) => {
-                    console.log(error)
                 });
         }
     };

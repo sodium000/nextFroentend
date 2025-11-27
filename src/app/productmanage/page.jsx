@@ -25,7 +25,6 @@ export default function ManageProductsPage() {
       );
       const data = await res.json();
       setProducts(data);
-      console.log(data)
     } catch (error) {
     } finally {
     }
