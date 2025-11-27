@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { Suspense, useContext, useState } from "react";
 import Image from "next/image";
 import AuthContext from "@/AuthContext/Authcontext";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -8,7 +8,7 @@ import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import Swal from "sweetalert2";
 
-export default function LoginPage() {
+function LoginForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [toggle, settoggle] = useState(false);
@@ -168,5 +168,13 @@ export default function LoginPage() {
                 </p>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <LoginForm />
+        </Suspense>
     );
 }
