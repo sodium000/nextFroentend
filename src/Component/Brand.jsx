@@ -1,6 +1,4 @@
-
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import Marquee from 'react-fast-marquee';
 
@@ -16,20 +14,47 @@ const Brand = () => {
   ];
 
   return (
-    <div className="mt-15  flex flex-col gap-10 justify-center items-center">
-      <div className="font-bold text-2xl text-center sm:wrap-break-word bg-linear-to-r from-blue-900 via-purple-900 to-indigo-900 bg-clip-text text-transparent ">
-        We've helped thousands of sales teams
+    <section className="py-10 bg-white dark:bg-slate-950 transition-colors duration-500 overflow-hidden">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center gap-4 mb-16">
+          <div className="h-px flex-1 bg-linear-to-r from-transparent to-slate-200 dark:to-slate-800"></div>
+          <h2 className="font-bold text-lg md:text-xl text-center text-slate-500 dark:text-slate-400 tracking-tight">
+            Trusted by <span className="text-indigo-600 dark:text-indigo-400">2,500+</span> industry leaders worldwide
+          </h2>
+          <div className="h-px flex-1 bg-linear-to-l from-transparent to-slate-200 dark:to-slate-800"></div>
+        </div>
+
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 w-20 md:w-40 z-10 bg-linear-to-r from-white dark:from-slate-950 to-transparent pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-20 md:w-40 z-10 bg-linear-to-l from-white dark:from-slate-950 to-transparent pointer-events-none"></div>
+
+          <Marquee 
+            autoFill={true} 
+            speed={40} 
+            gradient={false} 
+            pauseOnHover={true}
+          >
+            {logos.map((logo, index) => (
+              <div 
+                className="mx-8 md:mx-16 flex items-center justify-center" 
+                key={index}
+              >
+                <img 
+                  src={logo.src} 
+                  alt={logo.alt} 
+                  className=" w-auto object-contain dark:invert transition-all duration-500 "
+                />
+              </div>
+            ))}
+          </Marquee>
+        </div>
+
+        <div className="mt-12 flex justify-center">
+            <div className="h-1 w-32 rounded-full bg-linear-to-r from-transparent via-indigo-500/20 to-transparent"></div>
+        </div>
+
       </div>
-      <div className="flex gap-5 items-center container mx-auto">
-        <Marquee autoFill={true}>
-          {logos.map((logo, index) => (
-            <div className="mx-10 flex items-center" key={index}>
-              <img src={logo.src} alt={logo.alt}  />
-            </div>
-          ))}
-        </Marquee>
-      </div>
-    </div>
+    </section>
   );
 };
 

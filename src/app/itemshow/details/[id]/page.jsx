@@ -18,7 +18,7 @@ export default function ProductDetail({ params }) {
         if (!loading && !user) {
             router.replace("/login");
         }
-        const sin = fetch(`https://next-backend-sage.vercel.app/item/${id}`).then(res => res.json()).then((data) => { setSingleData(data) })
+        const sin = fetch(`http://localhost:5000/item/${id}`).then(res => res.json()).then((data) => { setSingleData(data) })
     }, [loading, user, router, id]);
 
 

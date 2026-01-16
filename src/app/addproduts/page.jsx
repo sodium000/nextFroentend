@@ -73,7 +73,7 @@ export default function AddProductPage() {
         };
 
         try {
-            const response = await fetch('https://next-backend-sage.vercel.app/addItem', {
+            const response = await fetch('http://localhost:5000/addItem', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

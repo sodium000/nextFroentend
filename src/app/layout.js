@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white bg-[url('/8198.jpg')] bg-cover `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <AuthProvider>
           <Navbar></Navbar>

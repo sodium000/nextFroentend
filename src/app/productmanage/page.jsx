@@ -17,7 +17,7 @@ export default function ManageProductsPage() {
     const fetchitem = async () => {
     try {
       const res = await fetch(
-        `https://next-backend-sage.vercel.app/myitem?email=${user?.email}`,{
+        `http://localhost:5000/myitem?email=${user?.email}`,{
           headers : {
             authorization : `Bearer ${user.accessToken}`
           }
@@ -52,7 +52,7 @@ export default function ManageProductsPage() {
   }
   async function handleDelete(id) {
     try {
-      const res = await fetch(`https://next-backend-sage.vercel.app/itemdelete/${id}`, {
+      const res = await fetch(`http://localhost:5000/itemdelete/${id}`, {
         method: "DELETE",
       });
       const result = await res.json();

@@ -14,7 +14,7 @@ export default function ItemListPage() {
 
     useEffect(()=>{
         
-        fetch('https://next-backend-sage.vercel.app/showItem').then(res=>res.json()).then(data=>setSampleItems(data));
+        fetch('http://localhost:5000/showItem').then(res=>res.json()).then(data=>setSampleItems(data));
         
     },[])
     
@@ -36,9 +36,7 @@ export default function ItemListPage() {
 
     return (
         <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-blue-50">
-            {/* Hero Header Section */}
             <div className="relative bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-16 px-6 overflow-hidden">
-                {/* Decorative Elements */}
                 <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
                 
@@ -53,7 +51,6 @@ export default function ItemListPage() {
             </div>
 
             <div className="max-w-7xl mx-auto p-6 space-y-8 -mt-8 relative z-10">
-                {/* Search and Filter Section */}
                 <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-white/20">
                     <div className="flex flex-col md:flex-row gap-4">
                         <div className="flex-1 relative">
@@ -83,12 +80,10 @@ export default function ItemListPage() {
                     </div>
                 </div>
 
-                {/* Items Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredItems.map((item,index) => (
                         <Link href={`/itemshow/details/${item._id}`} key={index}>
                             <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-2">
-                                {/* Image Container with Gradient Overlay */}
                                 <div className="relative h-64 overflow-hidden bg-linear-to-br from-indigo-100 to-purple-100">
                                     <img
                                         src={item.image}
@@ -101,16 +96,12 @@ export default function ItemListPage() {
                                             }
                                         }}
                                     />
-                                    {/* Gradient Overlay on Hover */}
                                     <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     
-                                    {/* Price Badge */}
                                     <div className="absolute top-4 right-4 bg-linear-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg">
                                         ${item.price}
                                     </div>
                                 </div>
-
-                                {/* Content */}
                                 <div className="p-6 space-y-3">
                                     <h2 className="text-2xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
                                         {item.title}
@@ -120,7 +111,6 @@ export default function ItemListPage() {
                                         {item.description}
                                     </p>
 
-                                    {/* Button */}
                                     <div className="pt-2">
                                         <span className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg group-hover:scale-105">
                                             View Details
@@ -131,14 +121,11 @@ export default function ItemListPage() {
                                     </div>
                                 </div>
 
-                                {/* Decorative Corner */}
                                 <div className="absolute top-0 left-0 w-20 h-20 bg-linear-to-br from-indigo-500/20 to-transparent rounded-br-2xl"></div>
                             </div>
                         </Link>
                     ))}
                 </div>
-
-                {/* Empty State */}
                 {filteredItems.length === 0 && (
                     <div className="text-center py-20">
                         <div className="inline-block p-6 bg-linear-to-br from-indigo-100 to-purple-100 rounded-full mb-4">

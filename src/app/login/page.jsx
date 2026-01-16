@@ -69,7 +69,6 @@ function LoginForm() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500">
             <div className="bg-white shadow-2xl rounded-2xl w-full max-w-md p-8">
-                {/* Logo */}
                 <div className="flex justify-center mb-6">
                     <Image
                         src="/password-computer.jpg"
