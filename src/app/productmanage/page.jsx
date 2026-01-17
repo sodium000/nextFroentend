@@ -75,7 +75,7 @@ export default function ManageProductsPage() {
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-indigo-50 p-6">
       {/* Header Section */}
-      <div className="max-w-7xl mx-auto mb-8">
+      <div className="max-w-7xl   mb-8">
         <div className="relative bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-12 px-8 rounded-3xl shadow-2xl overflow-hidden">
           {/* Decorative Elements */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
@@ -102,7 +102,7 @@ export default function ManageProductsPage() {
       </div>
 
       {/* Products Table */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl  ">
         <div className="bg-white/90 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full">

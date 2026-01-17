@@ -40,7 +40,7 @@ export default function ItemListPage() {
                 <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
                 
-                <div className="max-w-7xl mx-auto relative z-10">
+                <div className="max-w-7xl   relative z-10">
                     <h1 className="text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">
                         Discover Our Collection
                     </h1>
@@ -50,7 +50,7 @@ export default function ItemListPage() {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto p-6 space-y-8 -mt-8 relative z-10">
+            <div className="max-w-7xl   p-6 space-y-8 -mt-8 relative z-10">
                 <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-white/20">
                     <div className="flex flex-col md:flex-row gap-4">
                         <div className="flex-1 relative">

@@ -10,7 +10,7 @@ import ItemShow from "@/Component/ItemShow";
 
 export default function Home() {
   return (
-    <div className="container mx-auto">
+    <div className="">
       <Hero></Hero>
       <ItemShow></ItemShow>
       <Brand></Brand>

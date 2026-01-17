@@ -50,46 +50,46 @@ const Services = () => {
     ];
 
     return (
-        <section className="py-24 transition-colors duration-500 bg-white dark:bg-slate-950">
-            <div className='container mx-auto px-6 lg:px-16'>
-                
-                <div className='text-center mb-20'>
-                    <span className='inline-block px-4 py-1 mb-4 text-xs font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 rounded-full'>
+        <section className="py-10 transition-colors duration-500 bg-white dark:bg-slate-950">
+            <div className='    px-4 sm:px-6 lg:px-16'>   
+                <div className='text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20'>
+                    <span className='inline-block px-3 sm:px-4 py-1 mb-3 sm:mb-4 text-xs font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 rounded-full'>
                         Step by Step
                     </span>
-                    <h2 className='text-4xl md:text-5xl font-black text-slate-900 dark:text-white'>
+                    <h2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white'>
                         How it Works
                     </h2>
                 </div>
 
-                <div className='relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12'>
+                <div className='relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-12'>
                     
-                    <div className="hidden lg:block absolute top-16 left-0 w-full h-0.5 bg-slate-100 dark:bg-slate-800 z-0"></div>
+                    <div className="hidden lg:block absolute top-12 sm:top-16 left-0 w-full h-0.5 bg-slate-100 dark:bg-slate-800 z-0"></div>
 
                     {steps.map((step, index) => (
                         <div key={index} className='group relative flex flex-col items-center text-center z-10'>
                             
-                            <div className={`w-32 h-32 rounded-[2.5rem] ${step.bg} border-4 border-white dark:border-slate-950 flex items-center justify-center mb-8 shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl`}>
+                            <div className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-2xl sm:rounded-4xl md:rounded-[2.5rem] ${step.bg} border-2 sm:border-4 border-white dark:border-slate-950 flex items-center justify-center mb-4 sm:mb-6 md:mb-8 shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl`}>
                                 <div className={`${step.color} transition-transform duration-500 group-hover:rotate-12`}>
-                                    {step.icon}
+                                    <svg className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        {step.icon.props.children}
+                                    </svg>
                                 </div>
 
-
-                                <div className="absolute -bottom-2 bg-white dark:bg-slate-800 px-4 py-1 rounded-full shadow-md border border-slate-100 dark:border-slate-700 text-xs font-black text-slate-500">
+                                <div className="absolute -bottom-1 sm:-bottom-2 bg-white dark:bg-slate-800 px-2 py-0.5 sm:px-4 sm:py-1 rounded-full shadow-md border border-slate-100 dark:border-slate-700 text-xs font-black text-slate-500">
                                     STEP 0{index + 1}
                                 </div>
                             </div>
 
-                            <div className='space-y-4'>
-                                <h3 className='text-xl font-bold text-slate-900 dark:text-white tracking-tight'>
+                            <div className='space-y-2 sm:space-y-3 md:space-y-4'>
+                                <h3 className='text-base sm:text-lg md:text-xl font-bold text-slate-900 dark:text-white tracking-tight'>
                                     {step.title}
                                 </h3>
-                                <p className='text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-[250px]'>
+                                <p className='text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed max-w-[200px] sm:max-w-[250px]'>
                                     {step.description}
                                 </p>
                             </div>
 
-                            <div className={`absolute -inset-4 rounded-3xl ${step.bg} opacity-0 group-hover:opacity-100 -z-10 blur-xl transition-opacity duration-500`}></div>
+                            <div className={`absolute -inset-2 sm:-inset-4 rounded-2xl sm:rounded-3xl ${step.bg} opacity-0 group-hover:opacity-100 -z-10 blur-xl transition-opacity duration-500`}></div>
                         </div>
                     ))}
                 </div>

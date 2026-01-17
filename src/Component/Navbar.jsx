@@ -22,6 +22,15 @@ const Navbars = () => {
       <li>
         <Link href="/itemshow" className="hover:text-indigo-500 transition-colors">All Items</Link>
       </li>
+      <li>
+        <Link href="/about" className="hover:text-indigo-500 transition-colors">About</Link>
+      </li>
+      <li>
+        <Link href="/location" className="hover:text-indigo-500 transition-colors">Location</Link>
+      </li>
+      <li>
+        <Link href="/career" className="hover:text-indigo-500 transition-colors">Career</Link>
+      </li>
       
       {!user && (
         <li>
@@ -62,9 +71,8 @@ const Navbars = () => {
       animate={{ y: 0, opacity: 1 }}
       className="sticky top-0 z-50 w-full transition-all duration-300"
     >
-      <div className="container mx-auto px-4 py-2">
-        <div className="navbar max-h-16 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 px-4">
-          
+      <div className="">
+        <div className="navbar max-h-16 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md rounded-b-md shadow-lg border border-slate-200 dark:border-slate-800 px-20">
           <div className="navbar-start">
             <div className="dropdown">
               <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-1 mr-2">

@@ -24,34 +24,17 @@ const Review = () => {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden bg-white dark:bg-slate-950 transition-colors">
+    <section className="relative py-10 overflow-hidden bg-white dark:bg-slate-950 transition-colors">
       
-      {/* Background Glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-indigo-500/10 dark:bg-indigo-400/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[400px] md:w-[500px] h-[200px] sm:h-[250px] md:h-[300px] bg-indigo-500/10 dark:bg-indigo-400/10 rounded-full blur-[120px]" />
       </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-
-        {/* Header */}
-        <div className="flex flex-col items-center gap-6 mb-14 md:mb-20 max-w-3xl mx-auto text-center">
-          
-          <div className="relative">
-            <div className="absolute -inset-1 bg-linear-to-r from-blue-600 to-purple-600 rounded-full blur opacity-30" />
-            <div className="relative bg-white dark:bg-slate-900 rounded-full p-1">
-              <Image
-                src={customlogo}
-                alt="Customer Logo"
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover"
-              />
-            </div>
-          </div>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black bg-linear-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+      <div className="px-4 relative z-10">
+        <div className="flex flex-col mx-auto items-center gap-4 sm:gap-6 mb-4 sm:mb-6 md:mb-8 lg:mb-10 max-w-3xl text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black bg-linear-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text pb-2 sm:pb-3 text-transparent">
             What our customers are saying
           </h2>
-
-          <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed px-4">
             Enhance posture, mobility, and well-being effortlessly.
             <span className="block mt-1 italic text-slate-400 dark:text-slate-500">
               Join thousands of people living pain-free.
@@ -59,7 +42,6 @@ const Review = () => {
           </p>
         </div>
 
-        {/* Slider */}
         <div className="relative py-8 md:py-14 px-4 md:px-10 rounded-3xl md:rounded-[2.5rem]
           bg-slate-50/60 dark:bg-slate-900/30
           backdrop-blur border border-slate-200/50 dark:border-slate-800/50"

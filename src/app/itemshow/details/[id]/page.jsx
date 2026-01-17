@@ -36,7 +36,7 @@ export default function ProductDetail({ params }) {
         <>
             {singleData.map((sinItem) => (
                 <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-indigo-50" key={sinItem._id}>
-                    <div className="relative container mx-auto mt-6 h-80 sm:h-[450px] lg:h-[550px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                    <div className="relative w-full mt-6 h-80 sm:h-[450px] lg:h-[550px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
 
                         <div className="absolute inset-0 bg-linear-to-br from-indigo-600 via-purple-600 to-pink-600">
                             <img
@@ -63,7 +63,7 @@ export default function ProductDetail({ params }) {
                         </div>
                     </div>
 
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="max-w-6xl   px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <section className="lg:col-span-2 space-y-6">
                             <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/20">
                                 <div className="flex items-center gap-3 mb-6">
