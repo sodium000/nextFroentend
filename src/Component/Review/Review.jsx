@@ -27,7 +27,7 @@ const Review = () => {
     <section className="relative py-10 overflow-hidden bg-white dark:bg-slate-950 transition-colors">
       
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[400px] md:w-[500px] h-[200px] sm:h-[250px] md:h-[300px] bg-indigo-500/10 dark:bg-indigo-400/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-75 sm:w-100 md:w-125 h-50 sm:h-[250px] md:h-[300px] bg-indigo-500/10 dark:bg-indigo-400/10 rounded-full blur-[120px]" />
       </div>
       <div className="px-4 relative z-10">
         <div className="flex flex-col mx-auto items-center gap-4 sm:gap-6 mb-4 sm:mb-6 md:mb-8 lg:mb-10 max-w-3xl text-center">
@@ -42,10 +42,7 @@ const Review = () => {
           </p>
         </div>
 
-        <div className="relative py-8 md:py-14 px-4 md:px-10 rounded-3xl md:rounded-[2.5rem]
-          bg-slate-50/60 dark:bg-slate-900/30
-          backdrop-blur border border-slate-200/50 dark:border-slate-800/50"
-        >
+        <div className="relative py-8 md:py-14 px-4 md:px-10 rounded-3xl md:rounded-[2.5rem] bg-slate-50/60 dark:bg-slate-900/30 backdrop-blur border border-slate-200/50 dark:border-slate-800/50">
           <Swiper
             loop
             grabCursor
