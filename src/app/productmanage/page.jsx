@@ -15,7 +15,7 @@ export default function ManageProductsPage() {
 
   const fetchitem = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/myitem?email=${user?.email}`, {
+      const res = await fetch(`https://next-backend-sage.vercel.app /myitem?email=${user?.email}`, {
         headers: {
           authorization: `Bearer ${user.accessToken}`
         }
@@ -39,7 +39,7 @@ export default function ManageProductsPage() {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/itemdelete/${id}`, { method: "DELETE" });
+      const res = await fetch(`https://next-backend-sage.vercel.app /itemdelete/${id}`, { method: "DELETE" });
       const result = await res.json();
       if (result.deletedCount > 0) {
         setProducts(products.filter((p) => p._id !== id));
