@@ -1,207 +1,168 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthContext from "@/AuthContext/Authcontext";
+import { FiTrash2, FiEye, FiMoon, FiSun, FiSettings, FiPackage } from "react-icons/fi";
 
 export default function ManageProductsPage() {
-
   const router = useRouter();
   const { user, loading } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
 
-
-
-
-    const fetchitem = async () => {
+  const fetchitem = async () => {
     try {
-      const res = await fetch(
-        `http://localhost:5000/myitem?email=${user?.email}`,{
-          headers : {
-            authorization : `Bearer ${user.accessToken}`
-          }
+      const res = await fetch(`http://localhost:5000/myitem?email=${user?.email}`, {
+        headers: {
+          authorization: `Bearer ${user.accessToken}`
         }
-      );
+      });
       const data = await res.json();
       setProducts(data);
     } catch (error) {
-    } finally {
+      console.error("Fetch error:", error);
     }
   };
 
-    useEffect(() => {
-    if (user?.email) {
-      fetchitem();
-    }
+  useEffect(() => {
+    if (user?.email) fetchitem();
   }, [user?.email]);
 
-
-    useEffect(() => {
-    if (!loading && !user) {
-      router.replace("/login");
-    }
+  useEffect(() => {
+    if (!loading && !user) router.replace("/login");
   }, [loading, user, router]);
 
-  if (loading || (!loading && !user)) {
-    return (
-      <div className="min-h-screen bg-gray-50 text-gray-600 flex items-center justify-center">
-        Checking authentication...
-      </div>
-    );
-  }
-  async function handleDelete(id) {
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+
     try {
-      const res = await fetch(`http://localhost:5000/itemdelete/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(`http://localhost:5000/itemdelete/${id}`, { method: "DELETE" });
       const result = await res.json();
-      if (result.deletedCount > 0 || result.success) {
-        fetchitem()
-        setProducts(products.filter((p) => p.id !== id));
-      } else {
-        alert("Failed to delete the item.");
+      if (result.deletedCount > 0) {
+        setProducts(products.filter((p) => p._id !== id));
       }
     } catch (error) {
       alert("Error deleting item.");
-    } finally {
     }
   };
 
-  const handleView = (id) => {
-    router.push(`/itemshow/details/${id}`);
-  };
+  if (loading || (!loading && !user)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center dark:bg-slate-950 dark:text-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-indigo-50 p-6">
-      {/* Header Section */}
-      <div className="max-w-7xl   mb-8">
-        <div className="relative bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-12 px-8 rounded-3xl shadow-2xl overflow-hidden">
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-          
-          <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-4 bg-white/20 backdrop-blur-lg rounded-2xl">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-              </div>
-              <div>
-                <h1 className="text-4xl font-extrabold mb-2 drop-shadow-lg">
-                  Manage Products
-                </h1>
-                <p className="text-white/90 text-lg">
-                  View and manage all your products in one place
-                </p>
+    <div className={` transition-colors duration-300`}>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 md:p-8 text-slate-900 dark:text-slate-100">
+
+        <div className="max-w-7xl mx-auto mb-10">
+          <div className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-xl border border-slate-200 dark:border-slate-800">
+            {/* Background Decor */}
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="flex items-center gap-6 text-center md:text-left">
+                <div className="hidden md:flex p-5 bg-indigo-600 rounded-3xl text-white shadow-xl shadow-indigo-200 dark:shadow-none">
+                  <FiSettings size={32} />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-2">Inventory <span className="text-indigo-600 dark:text-indigo-400">Control</span></h1>
+                  <p className="text-slate-500 dark:text-slate-400 font-medium">You have {products.length} active listings</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Products Table */}
-      <div className="max-w-7xl  ">
-        <div className="bg-white/90 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead>
-                <tr className="bg-linear-to-r from-indigo-600 to-purple-600 text-white">
-                  <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wider">
-                    Title
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wider">
-                    Price
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wider">
-                    Priority
-                  </th>
-                  <th className="px-6 py-4 text-center text-sm font-bold uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {products.map((product,index) => (
-                  <tr
-                    key={index}
-                    className="hover:bg-linear-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-200"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-semibold text-gray-900">{product.title}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-lg font-bold bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                        ${product.price}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-600">
-                        {new Date(product.Date).toLocaleDateString()}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
-                          product.Priority === "High"
-                            ? "bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg"
-                            : product.Priority === "Medium"
-                            ? "bg-linear-to-r from-amber-500 to-amber-600 text-white shadow-lg"
-                            : "bg-linear-to-r from-green-500 to-green-600 text-white shadow-lg"
-                        }`}
-                      >
-                        {product.Priority}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <div className="flex items-center justify-center gap-3">
-                        <button
-                          onClick={() => handleView(product._id)}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-indigo-700 hover:to-purple-700 shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                          </svg>
-                          View
-                        </button>
-                        <button
-                          onClick={() => handleDelete(product._id)}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-red-500 to-red-600 text-white text-sm font-semibold rounded-lg hover:from-red-600 hover:to-red-700 shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-100 dark:border-slate-800">
+                    <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-slate-400">Product Details</th>
+                    <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-slate-400">Price</th>
+                    <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-slate-400">Status</th>
+                    <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-slate-400 text-center">Management</th>
                   </tr>
-                ))}
-                {products.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="px-6 py-20 text-center"
-                    >
-                      <div className="flex flex-col items-center justify-center">
-                        <div className="p-6 bg-linear-to-br from-indigo-100 to-purple-100 rounded-full mb-4">
-                          <svg className="w-16 h-16 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                          </svg>
+                </thead>
+                <tbody className="divide-y divide-slate-50 dark:divide-slate-800/50">
+                  {products.map((product) => (
+                    <tr key={product._id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                      <td className="px-8 py-6">
+                        <div className="flex items-center gap-4">
+                          <div className="h-14 w-14 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                            <img src={product.image} alt="" className="w-full h-full object-cover" />
+                          </div>
+                          <div>
+                            <div className="font-bold text-lg group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                              {product.title}
+                            </div>
+                            <div className="text-xs font-medium text-slate-400">
+                              Added: {new Date(product.Date).toLocaleDateString()}
+                            </div>
+                          </div>
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">No products available</h3>
-                        <p className="text-gray-600">Start by adding your first product!</p>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                      </td>
+                      <td className="px-8 py-6">
+                        <span className="text-xl font-black text-indigo-600 dark:text-indigo-400">
+                          ${product.price}
+                        </span>
+                      </td>
+                      <td className="px-8 py-6">
+                        <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-tighter shadow-sm
+                          ${product.Priority === "High" ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400" :
+                            product.Priority === "Medium" ? "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400" :
+                              "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"}
+                        `}>
+                          {product.Priority} Priority
+                        </span>
+                      </td>
+                      <td className="px-8 py-6">
+                        <div className="flex items-center justify-center gap-3">
+                          <button
+                            onClick={() => router.push(`/itemshow/details/${product._id}`)}
+                            className="p-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-500 transition-all"
+                            title="View"
+                          >
+                            <FiEye size={18} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(product._id)}
+                            className="p-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl hover:bg-red-500 hover:text-white transition-all"
+                            title="Delete"
+                          >
+                            <FiTrash2 size={18} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {products.length === 0 && (
+              <div className="py-32 text-center">
+                <div className="inline-flex p-8 bg-slate-50 dark:bg-slate-800 rounded-full mb-6">
+                  <FiPackage size={48} className="text-slate-300" />
+                </div>
+                <h3 className="text-2xl font-black mb-2">Shelf is Empty</h3>
+                <p className="text-slate-500 mb-8">You haven't listed any products for sharing yet.</p>
+                <button
+                  onClick={() => router.push('/addproducts')}
+                  className="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 dark:shadow-none"
+                >
+                  Create Your First Listing
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

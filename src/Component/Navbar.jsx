@@ -31,7 +31,7 @@ const Navbars = () => {
       <li>
         <Link href="/career" className="hover:text-indigo-500 transition-colors">Career</Link>
       </li>
-      
+
       {!user && (
         <li>
           <Link href="/registration" className="hover:text-indigo-500 transition-colors">Registration</Link>
@@ -40,21 +40,6 @@ const Navbars = () => {
 
       {user && (
         <>
-          <li>
-            <Link href="/my-bookings" className="flex items-center gap-2 hover:text-indigo-500 transition-colors">
-              <FiPackage /> My Bookings
-            </Link>
-          </li>
-          <li>
-            <Link href="/wishlist" className="flex items-center gap-2 hover:text-indigo-500 transition-colors">
-              <FiHeart className="text-pink-500" /> Wishlist
-            </Link>
-          </li>
-          <li className="lg:hidden">
-            <Link href="/notifications" className="flex items-center gap-2 hover:text-indigo-500 transition-colors">
-              <FiBell /> Notifications
-            </Link>
-          </li>
           <li className="lg:hidden">
             <Link href="/profile" className="flex items-center gap-2 hover:text-indigo-500 transition-colors">
               <FiUser /> My Profile
@@ -83,7 +68,7 @@ const Navbars = () => {
               <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-1 p-4 shadow-2xl bg-white dark:bg-slate-900 rounded-2xl w-64 border border-slate-100 dark:border-slate-800">
                 {navLinks}
                 {user && (
-                   <li className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <li className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <button onClick={() => SingOut()} className="flex items-center gap-2 text-red-500">
                       <FiLogOut /> Logout
                     </button>
@@ -92,7 +77,7 @@ const Navbars = () => {
               </ul>
             </div>
 
-                
+
             <Link href="/" className="flex items-center gap-2 group">
               <div className="relative">
                 <div className="absolute -inset-1 bg-linear-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-20 group-hover:opacity-50 transition"></div>
@@ -121,10 +106,17 @@ const Navbars = () => {
                   </Link>
                 ) : (
                   <div className="flex items-center gap-3">
-                    <Link href="/addproduts" className="hidden md:flex btn btn-ghost btn-circle text-indigo-600" title="Add Item">
-                        <FiPlusCircle size={22} />
+                    <Link
+                      href="/addproduts"
+                      className="hidden md:flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-2xl font-bold text-sm shadow-lg shadow-indigo-200 dark:shadow-none transition-all hover:-translate-y-0.5 active:scale-95 group"
+                    >
+                      <FiPlusCircle
+                        size={20}
+                        className="group-hover:rotate-90 transition-transform duration-300"
+                      />
+                      <span>Add Item</span>
                     </Link>
-                    
+
                     <div className="dropdown dropdown-end">
                       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar border-2 border-indigo-500/20">
                         <div className="w-9 rounded-full">

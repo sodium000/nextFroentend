@@ -1,222 +1,190 @@
-/* eslint-disable react-hooks/immutability */
+
 "use client";
 
 import React, { useContext, useState } from "react";
 import Image from "next/image";
-import { IoIosEye } from "react-icons/io";
-import { IoIosEyeOff } from "react-icons/io";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { FcGoogle } from "react-icons/fc";
 import AuthContext from "@/AuthContext/Authcontext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 export default function RegisterPage() {
-
-    const [toggle, settoggle] = useState(false)
+    const [toggle, settoggle] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
         Photo_Url: "",
     });
+    const [errors, setErrors] = useState({});
 
     const { SignByGoogle, RegWithEmail } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        if (errors.password) setErrors({});
     };
 
     const googleLogin = () => {
-        SignByGoogle()
-            .then((result) => {
-            }).catch((error) => {
-            });
+        SignByGoogle().then(() => {}).catch(() => {});
     };
 
-
-
-    /**
-     * 
-     * password validation 
-     * 
-     */
-
-
-    const newErrors = {};
-    const [errors, setErrors] = useState({});
     const handleSubmit = (e) => {
         e.preventDefault();
-        const password = formData.password
-        if (!password || password.length < 8) {
-            newErrors.password = "Password must be at least 8 characters.";
-            setErrors(newErrors)
-            return
-        }
-        if (!/[a-z]/.test(password)) {
-            newErrors.password = "Use at least one lowercase letter.";
-            setErrors(newErrors)
-            return
-        }
-        if (!/[A-Z]/.test(password)) {
-            newErrors.password = "Use at least one uppercase letter.";
-            setErrors(newErrors)
-            return
-        }
-        if (!/[0-9]/.test(password)) {
-            newErrors.password = "Use at least one digit.";
-            setErrors(newErrors)
-            return
-        }
-        else {
-            const Email = formData.email
-            const Password = formData.password
-            const Name = formData.name
-            const PhotoURL = formData.Photo_Url
-            RegWithEmail(Name, Email, Password, PhotoURL)
-                .then((userCredential) => {
+        const { password, email, name, Photo_Url } = formData;
+        const newErrors = {};
 
-                })
-                .catch((error) => {
-                });
+        if (!password || password.length < 8) newErrors.password = "Minimum 8 characters required.";
+        else if (!/[a-z]/.test(password)) newErrors.password = "Add a lowercase letter.";
+        else if (!/[A-Z]/.test(password)) newErrors.password = "Add an uppercase letter.";
+        else if (!/[0-9]/.test(password)) newErrors.password = "Add at least one digit.";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
         }
+
+        RegWithEmail(name, email, password, Photo_Url)
+            .then(() => {})
+            .catch((error) => console.error(error));
     };
 
-
     return (
-        <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-teal-400 via-blue-500 to-indigo-600">
-            <div className=" shadow-2xl rounded-2xl w-full max-w-md p-8">
-                <div className="flex justify-center mb-6">
-                    <Image
-                        src="/partnership-firm.png"
-                        alt="Logo"
-                        width={60}
-                        height={60}
-                    />
-                </div>
+        <div className="min-h-screen flex items-center justify-center p-4 bg-white dark:bg-slate-950 transition-colors duration-500 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-indigo-200/20 dark:bg-indigo-900/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-200/20 dark:bg-purple-900/10 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2"></div>
 
-                <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
-                    Create Your Account
-                </h2>
-                <p className="text-center text-gray-800 mb-6">
-                    Join us today and start your journey
-                </p>
-
-                <form onSubmit={handleSubmit} className="space-y-5">
-            <motion.div
-              initial={{ opacity: 0, x: -60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1 }}
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="relative z-10 w-full max-w-md"
             >
-              <label className="block text-sm font-medium text-white mb-1">
-                Full Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-400 transition duration-300"
-                required
-                
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 2 }}
-            >
-              <label className="block text-sm font-medium text-white mb-1">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="example@email.com"
-                className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-400 transition duration-300"
-                required
-              />
-            </motion.div>
+                <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-2xl rounded-3xl p-8">
+                    <div className="flex flex-col items-center mb-8">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-lg mb-4">
+                            <Image
+                                src="/partnership-firm.png"
+                                alt="Logo"
+                                width={48}
+                                height={48}
+                                className="object-contain"
+                            />
+                        </div>
+                        <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                            Get Started
+                        </h2>
+                        <p className="text-slate-500 dark:text-slate-400 mt-2 text-center">
+                            Join ItemSell and start your journey
+                        </p>
+                    </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 3 }}
-              className="relative"
-            >
-              <label className="block text-sm font-medium text-white mb-1">
-                Password
-              </label>
-              <input
-                type={toggle ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-400 transition duration-300"
-                required
-              />
-              <button onClick={(e) => {
-                e.preventDefault()
-                settoggle(!toggle)
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1 ml-1">Full Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder="John Doe"
+                                className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white transition-all outline-none"
+                                required
+                            />
+                        </div>
 
-              }} >{toggle ? <IoIosEyeOff className="btn btn-xs border-0 rounded-full  absolute right-1.5 top-8 z-10 bg-linear-to-br from-orange-600 via-purple-600 to-pink-500" /> : <IoIosEye className="btn btn-xs border-0 rounded-full absolute right-1.5 top-8  z-10 bg-linear-to-br from-orange-600 via-purple-600 to-pink-500" />}
-              </button>
-              {
-                errors.password && <p className="text-red-700 text-sm">{errors.password}</p>
-              }
-            </motion.div>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1 ml-1">Email Address</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="name@company.com"
+                                className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white transition-all outline-none"
+                                required
+                            />
+                        </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 4 }}
-            >
-              <label className="block text-sm font-medium text-white mb-1">
-                Photo Url
-              </label>
-              <input
-                type="text"
-                name="Photo_Url"
-                value={formData.Photo_Url}
-                onChange={handleChange}
-                placeholder="http://localhost:5173/"
-                className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-400 transition duration-300"
-                required
-              />
-            </motion.div>
+                        <div className="relative">
+                            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1 ml-1">Password</label>
+                            <div className="relative">
+                                <input
+                                    type={toggle ? "text" : "password"}
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="••••••••"
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white transition-all outline-none"
+                                    required
+                                />
+                                <button 
+                                    type="button"
+                                    onClick={() => settoggle(!toggle)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-500 transition-colors"
+                                >
+                                    {toggle ? <IoIosEyeOff size={20} /> : <IoIosEye size={20} />}
+                                </button>
+                            </div>
+                            <AnimatePresence>
+                                {errors.password && (
+                                    <motion.p 
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="text-red-500 text-xs font-medium mt-1 ml-1"
+                                    >
+                                        {errors.password}
+                                    </motion.p>
+                                )}
+                            </AnimatePresence>
+                        </div>
 
-            <motion.button
-              type="submit"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="btn w-full bg-linear-to-r from-indigo-500 to-pink-500 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition"
-            >
-              Register
-            </motion.button>
-          </form>
+                        <div>
+                            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1 ml-1">Photo URL</label>
+                            <input
+                                type="text"
+                                name="Photo_Url"
+                                value={formData.Photo_Url}
+                                onChange={handleChange}
+                                placeholder="https://example.com/photo.jpg"
+                                className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-transparent focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white transition-all outline-none"
+                                required
+                            />
+                        </div>
 
-                <div className="flex items-center my-6">
-                    <hr className="grow border-gray-300" />
-                    <span className="px-2 text-gray-400 text-sm">OR</span>
-                    <hr className="grow border-gray-300" />
-                </div>
+                        <motion.button
+                            type="submit"
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            className="w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold shadow-xl hover:shadow-indigo-500/20 transition-all mt-4"
+                        >
+                            Create Account
+                        </motion.button>
+                    </form>
 
-                <div className="flex flex-col gap-3">
-                    <button onClick={googleLogin} className="btn bg-linear-to-r from-indigo-500 to-pink-500 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                        <svg className="rounded-2xl" aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
-                        Login with Google
+                    <div className="flex items-center my-6">
+                        <div className="grow border-t border-slate-200 dark:border-slate-800"></div>
+                        <span className="px-3 text-slate-400 text-xs font-bold uppercase tracking-widest">or continue with</span>
+                        <div className="grow border-t border-slate-200 dark:border-slate-800"></div>
+                    </div>
+
+                    <button 
+                        onClick={googleLogin} 
+                        className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-slate-700 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm"
+                    >
+                        <FcGoogle size={24} />
+                        Google
                     </button>
-                </div>
 
-                <p className="text-center text-sm text-gray-800 mt-6">
-                    Already have an account?{" "}
-                    <a href="/login" className="text-cyan-200 font-medium hover:underline">
-                        Sign in
-                    </a>
-                </p>
-            </div>
+                    <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
+                        Already have an account?{" "}
+                        <Link href="/login" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+                            Sign in
+                        </Link>
+                    </p>
+                </div>
+            </motion.div>
         </div>
     );
 }

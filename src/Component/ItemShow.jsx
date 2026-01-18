@@ -12,7 +12,7 @@ const ItemShow = () => {
         fetch('http://localhost:5000/showItem')
             .then(res => res.json())
             .then(data => {
-                setItems(data.slice(0, 6));
+                setItems(data.slice(0, 8));
                 setLoading(false);
             })
             .catch(err => {
