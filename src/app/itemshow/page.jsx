@@ -13,7 +13,7 @@ export default function ItemListPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://next-backend-sage.vercel.app /showItem')
+    fetch('https://next-backend-sage.vercel.app/showItem')
       .then(res => res.json())
       .then(data => {
         setSampleItems(data);

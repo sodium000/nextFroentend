@@ -15,7 +15,7 @@ export default function ProductDetail({ params }) {
         if (!loading && !user) {
             router.replace("/login");
         }
-        fetch(`https://next-backend-sage.vercel.app /item/${id}`)
+        fetch(`https://next-backend-sage.vercel.app/item/${id}`)
             .then(res => res.json())
             .then((data) => {
                 setSingleData(Array.isArray(data) ? data : [data]);

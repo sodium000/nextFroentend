@@ -9,7 +9,7 @@ const ItemShow = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('https://next-backend-sage.vercel.app /showItem')
+        fetch('https://next-backend-sage.vercel.app/showItem')
             .then(res => res.json())
             .then(data => {
                 setItems(data.slice(0, 8));
